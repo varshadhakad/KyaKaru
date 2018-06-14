@@ -69,8 +69,10 @@ public class APICalls {
                     String restaurantsOpenAndNearMe[] = new String[10];
                     double destLatitude[] = new double[10];
                     double destLongitude[] = new double[10];
-                    String finalRestaurants[] = new String[5];
-                    int finalRestaurantsIndex = 0;
+                    String finalRestaurantsByWalk[] = new String[5];
+                    String finalRestaurantsByCar[] = new String[5];
+                    int finalRestaurantsCarIndex = 0;
+                    int finalRestaurantsWalkIndex = 0;
                     int restaurantsOpenAndNearMe_index = 0;
                     for(int i=0;i<resultArray.length();i++){
 
@@ -109,10 +111,8 @@ public class APICalls {
                             double lat2 = destLatitude[restaurantsOpenAndNearMe_index];
                             double long2 = destLongitude[restaurantsOpenAndNearMe_index];
 
-                            lat1 = 90;
-                            long1=0;
-                            lat2 = -90;
-                            long2=0;
+                            //Walking
+                            URL url = new URL("http://dev.virtualearth.net/REST/V1/Routes/Walking?wp.0=Eiffel%20Tower&wp.1=louvre%20museum&optmz=distance&output=xml&key=BingMapsKey");
 
                             double dLat = (lat2 - lat1) / 180* PI;
                             double dLong = (long2 - long1) / 180 * PI;
@@ -139,13 +139,26 @@ public class APICalls {
 
                             double carSpeed = 11.11; //metres per second for 40kmph
                             double commuteTimeByCar = distance/carSpeed; //in seconds
+                            Log.v("Distance = " , String.valueOf(distance));
+                            Log.v("Time by Car = " , String.valueOf(commuteTimeByCar));
 
-                            double totalTime = 2*commuteTimeByCar + 3600; //3600 seconds are considered for eating
-                            if(totalTime <= time)
+                            double walkSpeed = 0.5; //metres per second for 40kmph
+                            double commuteTimeByWalk = distance/walkSpeed; //in seconds
+                            Log.v("Distance = " , String.valueOf(distance));
+                            Log.v("Time by Walk = " , String.valueOf(commuteTimeByWalk));
+
+
+                            double totalTimeByCar = 2*commuteTimeByCar + 3600; //3600 seconds are considered for eating
+                            double totalTimeByWalk = 2*commuteTimeByWalk + 3600; //3600 seconds are considered for eating
+                            if(totalTimeByWalk <= time)
                             {
-                                finalRestaurants[finalRestaurantsIndex] = restaurantName;
-                                finalRestaurantsIndex++;
-
+                                finalRestaurantsByWalk[finalRestaurantsIndex] = restaurantName;
+                                finalRestaurantsWalkIndex++;
+                            }
+                            if(totalTimeByCar <= time)
+                            {
+                                finalRestaurantsByCar[finalRestaurantsIndex] = restaurantName;
+                                finalRestaurantsCarIndex++;
                             }
                             //return distance; // distance in meters
                             restaurantsOpenAndNearMe_index++;
