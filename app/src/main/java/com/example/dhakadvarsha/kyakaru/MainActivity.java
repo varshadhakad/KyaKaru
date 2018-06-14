@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         clickmeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new placeToVisit().getPlacesToVisit(30,17.440081, 78.348915);
+                new PlaceVisit().getPlacesToVisit(30,17.440081, 78.348915);
             }
         });
 
