@@ -1,5 +1,6 @@
 package com.example.dhakadvarsha.kyakaru;
 
+
 import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
@@ -18,13 +19,13 @@ import java.net.URL;
 import static java.lang.Math.*;
 
 
-public class APICalls {
+public class PlaceVisit {
 
     private int time;
     private double curr_latitude;
     private double curr_longitude;
 
-    public void placesToEat(int time,double curr_latitude, double curr_longitude){
+    public void getPlacesToVisit(int time,double curr_latitude, double curr_longitude){
         String API_KEY = "AIzaSyCvkPVO9PN9rc1Q8-frKtGD_rMrn2fKVAk";
         String API_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?query=restaurant+near+me&rankby=distance&opennow";
 
@@ -33,7 +34,7 @@ public class APICalls {
             this.curr_latitude=curr_latitude;
             this.curr_longitude=curr_longitude;
             URL url = new URL(API_URL + "&location=" + curr_latitude + "," + curr_longitude  + "&key=" + API_KEY);
-            new MyApi().execute(url);
+            new PlaceVisit().MyApi2().execute(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -41,13 +42,14 @@ public class APICalls {
 
     }
 
-    class MyApi extends AsyncTask<URL,Void,JSONObject>
+    class MyApi2 extends AsyncTask<URL,Void,JSONObject>
     {
 
 
-        MyApi(){
+        MyApi2(){
 
         }
+
         @Override
         protected JSONObject doInBackground(URL... urls) {
             try
@@ -152,12 +154,12 @@ public class APICalls {
                             double totalTimeByWalk = 2*commuteTimeByWalk + 3600; //3600 seconds are considered for eating
                             if(totalTimeByWalk <= time)
                             {
-                                finalRestaurantsByWalk[finalRestaurantsWalkIndex] = restaurantName;
+                                finalRestaurantsByWalk[finalRestaurantsIndex] = restaurantName;
                                 finalRestaurantsWalkIndex++;
                             }
                             if(totalTimeByCar <= time)
                             {
-                                finalRestaurantsByCar[finalRestaurantsCarIndex] = restaurantName;
+                                finalRestaurantsByCar[finalRestaurantsIndex] = restaurantName;
                                 finalRestaurantsCarIndex++;
                             }
                             //return distance; // distance in meters
@@ -168,35 +170,6 @@ public class APICalls {
                     }
 
 
-
-
-
-
-
-                 /*   Log.d("TEstttttttt","Success......");
-                    InputStream responseBody = urlConnection.getInputStream();
-                    InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
-                    JsonReader jsonReader = new JsonReader(responseBodyReader);
-
-                    //JSON Parsing: extracting keys
-                    jsonReader.beginObject(); // Start processing the JSON object
-                    while (jsonReader.hasNext()) { // Loop through all keys
-                        String key = jsonReader.nextName(); // Fetch the next key
-                        Log.d("my app",key);
-                        if (key.equals("types")) { // Check if desired key
-                            // Fetch the value as a String
-                            String value = jsonReader.nextString();
-
-                            // Do something with the value
-                            // ...
-
-                            break; // Break out of the loop
-                        } else {
-                            jsonReader.skipValue(); // Skip values of other keys
-                        }
-                    }
-
-                    jsonReader.close();*/
                     urlConnection.disconnect();
 
                 } else {

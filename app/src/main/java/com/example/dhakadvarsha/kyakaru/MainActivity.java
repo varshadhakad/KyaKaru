@@ -18,10 +18,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         clickmeBtn=(Button)findViewById(R.id.clickmeBtn);
-        clickmeBtn.setOnClickListener(new View.OnClickListener() {
+        /*clickmeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new APICalls().placesToEat(30,17.440081, 78.348915);
+            }
+        });*/
+
+        clickmeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new placeToVisit().getPlacesToVisit(30,17.440081, 78.348915);
             }
         });
 
