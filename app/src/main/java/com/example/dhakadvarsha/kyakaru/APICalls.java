@@ -153,11 +153,13 @@ public class APICalls {
                             if(totalTimeByWalk <= time)
                             {
                                 finalRestaurantsByWalk[finalRestaurantsWalkIndex] = restaurantName;
+                                Log.v("by walk=", String.valueOf(finalRestaurantsByWalk[finalRestaurantsWalkIndex]));
                                 finalRestaurantsWalkIndex++;
                             }
                             if(totalTimeByCar <= time)
                             {
                                 finalRestaurantsByCar[finalRestaurantsCarIndex] = restaurantName;
+                                Log.v("by car=", String.valueOf(finalRestaurantsByCar[finalRestaurantsCarIndex]));
                                 finalRestaurantsCarIndex++;
                             }
                             //return distance; // distance in meters
